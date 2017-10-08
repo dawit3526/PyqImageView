@@ -1,4 +1,4 @@
-# References:
+    # References:
 # http://johnnado.com/pyqt-qtest-example/
 # In particular, see the BitBucket link on that page
 
@@ -13,6 +13,8 @@ import sys
 import unittest
 
 from viewer import ImageViewerWindow
+from viewer import AppImageView
+from widget import ImageView
 
 app = QApplication(sys.argv)
 class WindowTest(unittest.TestCase):
@@ -21,20 +23,35 @@ class WindowTest(unittest.TestCase):
         image = QtGui.QImage()
         image.load(input_image)
         self.window = ImageViewerWindow(image, input_image)
+        
         self.window.show()
 
         self.viewport = self.window.image_view.viewport()
 
     def test_doubleClick(self):
         # The following variables may be helpful in implementing this function:
-         centerPos = self.window.image_view.last_pos
+            
+        #Example of pixel points recorded after double click are shown below and I found simlar problem that 
+#        it moves down one pixel so it is good idea to test it by double clicking twise and checking if the 
+#        returned last_scene_pos is the same as the second click possition.
+        #(93.38888888888889, 70.61111111111111)
+        #(93.64197530864197, 69.59876543209877)
+        #(93.85288065843623, 69.59876543209879)
+        #(94.12627648224358, 69.5206523395824)
+        #(94.1696726447527, 69.4338600145642)
+        #(94.14556366558097, 69.37358756663488)
+        #(94.15895754289859, 69.3802845052937)
+        #(94.16639858585285, 69.40632815563353)
+        #(94.13952815296255, 69.40839511200971)
+
+          # The following variables may be helpful in implementing this function:
+#         centerPos = self.window.image_view.last_pos
          centerScenePos = self.window.image_view.last_scene_pos
          #print(last_posd)L
          pt = QtCore.QPoint(20,20)
          QTest.mouseDClick(self.viewport,Qt.LeftButton,pos=pt, delay =40)
+         QTest.mouseDClick(self.viewport,Qt.LeftButton,pos=pt, delay =40)
          assert self.window.image_view.last_pos == centerScenePos
-         
-        #   pass
 
     @mock.patch('viewer.ImageViewerWindow.quit')
     def test_escape(self, quit_function):
