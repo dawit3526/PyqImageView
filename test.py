@@ -15,7 +15,10 @@ import unittest
 from viewer import ImageViewerWindow
 from viewer import AppImageView
 from widget import ImageView
-
+#I have test this programm in linux in evoirnment which I found scrolling stays 
+# in the same focus of view as your mouse is pointing over, ctr+click for panning also works good, 
+#for shift-draging to create a selectable region it's zooming factor looks like big with in the second click 
+# it almost finishes the zoom.
 app = QApplication(sys.argv)
 class WindowTest(unittest.TestCase):
     def setUp(self):
